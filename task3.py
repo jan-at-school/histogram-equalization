@@ -81,4 +81,4 @@ for thread in threads:
     thread.join()
 
 image.save(outDir+'/output.jpg')
-plt.savefig(outDir+'/outputhist.svg')
+
