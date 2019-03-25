@@ -71,7 +71,7 @@ class EqualizeWindowThread(Thread):
         cProbability = [0] * 256  # fill zeros
 
         for x, y in itertools.product(range(box.left, box.left + width), range(box.top, box.top+height)):
-            freq[pixels[x, y]] += 1
+            freq[image.getpixel((x, y))] += 1
 
         # HISTOGRAM EQUALIZATION
         prevSum = 0
@@ -81,6 +81,6 @@ class EqualizeWindowThread(Thread):
         with mutex:
             for x, y in itertools.product(range(box.left, box.left + width), range(box.top, box.top+height)):
                 # (L-1) * cummulative probability
-                pixels[x, y] = int((255 * cProbability[pixels[x, y]]))
+                pixels[x, y] = int((255 * cProbability[image.getpixel((x, y))]))
 
         print('Thread completed its work' + str(box))
