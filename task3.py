@@ -75,10 +75,12 @@ for x, y in itertools.product(range(int(width/stride)), range(int(height/stride)
 # initialize array before starting threads
 for thread in threads:
     thread.start()
-
+c=len(threads)
 # wait for all of them to complete
 for thread in threads:
     thread.join()
+    c-=c
+    print(c)
 
 image.save(outDir+'/output.jpg')
 
