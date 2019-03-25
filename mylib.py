@@ -84,3 +84,4 @@ class EqualizeWindowThread(Thread):
                 pixels[x, y] = int((255 * cProbability[image.getpixel((x, y))]))
 
         # print('Thread completed its work' + str(box))
+        print(box.left)

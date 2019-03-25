@@ -16,6 +16,9 @@ import sys
 import os
 import mylib
 from mylib import BOX
+import threading
+import time
+from concurrent.futures import ThreadPoolExecutor
 
 
 # open image
@@ -68,6 +71,8 @@ editableImage = image.load()
 for x, y in itertools.product(range(int(width/stride)), range(int(height/stride))):
   x = x * stride
   y = y * stride
+  while threading.active_count()>150 :
+    time.sleep(5)
   threads.append(mylib.EqualizeWindowThread(image2, editableImage,
                                               BOX(x, y, x + windowSize if (x + windowSize) <= width else width, y + windowSize if (y + windowSize) <= height else height)))
 
@@ -75,12 +80,9 @@ for x, y in itertools.product(range(int(width/stride)), range(int(height/stride)
 # initialize array before starting threads
 for thread in threads:
     thread.start()
-c=len(threads)
 # wait for all of them to complete
 for thread in threads:
     thread.join()
-    c-=c
-    print(c)
 
 image.save(outDir+'/output.jpg')
 
